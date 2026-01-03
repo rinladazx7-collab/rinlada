@@ -2,8 +2,8 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RINLADA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RINLADA | Mobile Optimized</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -22,6 +22,7 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
             -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         h1, h2, h3, .brand-font {
@@ -61,27 +62,29 @@
 
         @keyframes float {
             from { transform: translate(0, 0) scale(1); }
-            to { transform: translate(50px, 80px) scale(1.2); }
+            to { transform: translate(30px, 40px) scale(1.1); }
         }
 
         .glass-nav {
-            background: rgba(5, 8, 16, 0.8);
-            backdrop-filter: blur(20px);
+            background: rgba(5, 8, 16, 0.85);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--glass-border);
         }
 
         .glass-card {
             background: var(--glass);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
-            transition: all 0.5s cubic-bezier(0.2, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1);
             position: relative;
         }
 
-        .glass-card:hover {
-            border-color: var(--accent-pink);
-            transform: translateY(-12px);
-            box-shadow: 0 15px 45px -10px rgba(244, 114, 182, 0.25);
+        @media (min-width: 1024px) {
+            .glass-card:hover {
+                border-color: var(--accent-pink);
+                transform: translateY(-8px);
+                box-shadow: 0 15px 35px -10px rgba(244, 114, 182, 0.2);
+            }
         }
 
         /* Magical Shine Text */
@@ -92,7 +95,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             animation: shine 5s linear infinite;
-            filter: drop-shadow(0 0 15px rgba(244, 114, 182, 0.3));
         }
 
         @keyframes shine {
@@ -104,37 +106,30 @@
             padding: 1px;
             display: inline-block;
             border-radius: 99px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: 0.3s;
         }
 
         .btn-magical-inner {
             background: var(--bg-dark);
-            padding: 12px 32px;
+            padding: 14px 28px;
             display: block;
             border-radius: 99px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 3px;
-            transition: 0.3s;
-        }
-
-        .btn-magical:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 0 30px rgba(244, 114, 182, 0.5);
-        }
-
-        .btn-magical:hover .btn-magical-inner {
-            background: transparent;
-            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
         }
 
         /* Mobile Menu */
         #mobile-menu {
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateY(-110%);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.1);
         }
         #mobile-menu.active {
-            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
         }
 
         /* Lightbox */
@@ -143,29 +138,37 @@
             position: fixed;
             inset: 0;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
 
         #lightbox-img {
-            max-width: 95%;
-            max-height: 85vh;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 100px rgba(56, 189, 248, 0.2);
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
         /* Step Bubbles */
-        .step-bubble {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(244, 114, 182, 0.1));
-            border: 1px solid var(--glass-border);
+        .step-number {
+            font-size: 3rem;
+            line-height: 1;
+            font-weight: 800;
+            background: linear-gradient(to bottom, rgba(244, 114, 182, 0.4), transparent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        @media (max-width: 640px) {
-            .hero-title { font-size: 3.5rem; line-height: 1.1; }
-            .hero-subtitle { font-size: 0.7rem; letter-spacing: 0.25em; }
+        /* Prevent unwanted scroll on mobile menu */
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        .product-track {
+            touch-action: pan-y;
         }
     </style>
 </head>
@@ -174,155 +177,158 @@
     <div id="scroll-progress"></div>
     <canvas id="particles-js"></canvas>
 
-    <!-- Glow Backgrounds -->
-    <div class="glow-sphere w-64 md:w-[600px] h-64 md:h-[600px] bg-pink-500/20 top-[-10%] left-[-15%]"></div>
-    <div class="glow-sphere w-80 md:w-[700px] h-80 md:h-[700px] bg-sky-500/20 bottom-[-15%] right-[-15%]"></div>
+    <!-- Glow Effects -->
+    <div class="glow-sphere w-48 h-48 bg-pink-500/20 top-0 left-0"></div>
+    <div class="glow-sphere w-64 h-64 bg-sky-500/20 bottom-0 right-0"></div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-[100] glass-nav px-6 md:px-12 py-5 flex justify-between items-center">
-        <div class="brand-font text-xl md:text-2xl font-bold tracking-[0.4em] text-white">RINLADA</div>
+    <nav class="fixed w-full z-[100] glass-nav px-6 py-4 flex justify-between items-center">
+        <div class="brand-font text-xl font-bold tracking-[0.3em] text-white">RINLADA</div>
         
-        <div class="hidden md:flex space-x-12 text-[10px] uppercase tracking-[0.3em] font-medium">
+        <div class="hidden md:flex space-x-8 text-[10px] uppercase tracking-[0.2em]">
             <a href="#" class="text-pink-400">หน้าหลัก</a>
-            <a href="#shop" class="text-gray-400 hover:text-white transition-colors">ผลงานทั้งหมด</a>
-            <a href="#how-to-order" class="text-gray-400 hover:text-white transition-colors">วิธีการสั่งซื้อ</a>
-            <a href="#contact" class="text-gray-400 hover:text-white transition-colors">ช่องทางการติดต่อ</a>
+            <a href="#shop" class="text-gray-400 hover:text-white transition-colors">ผลงาน</a>
+            <a href="#how-to-order" class="text-gray-400 hover:text-white transition-colors">สั่งซื้อ</a>
+            <a href="#contact" class="text-gray-400 hover:text-white transition-colors">ติดต่อ</a>
         </div>
 
-        <button class="md:hidden text-white" onclick="toggleMenu()">
+        <button class="md:hidden text-white p-2" onclick="toggleMenu()" aria-label="Toggle Menu">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
             </svg>
         </button>
     </nav>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed inset-0 z-[90] bg-[#050810] flex flex-col items-center justify-center space-y-10 md:hidden">
-        <a href="#" onclick="toggleMenu()" class="text-3xl brand-font text-pink-400">หน้าหลัก</a>
-        <a href="#shop" onclick="toggleMenu()" class="text-3xl brand-font text-white">ผลงาน</a>
-        <a href="#how-to-order" onclick="toggleMenu()" class="text-3xl brand-font text-white">วิธีสั่งซื้อ</a>
-        <a href="#contact" onclick="toggleMenu()" class="text-3xl brand-font text-white">ติดต่อ</a>
-        <button onclick="toggleMenu()" class="absolute top-8 right-8 text-gray-500 text-sm uppercase tracking-widest">Close</button>
+    <div id="mobile-menu" class="fixed inset-0 z-[90] bg-[#050810]/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8 md:hidden">
+        <a href="#" onclick="toggleMenu()" class="text-2xl brand-font text-pink-400">หน้าหลัก</a>
+        <a href="#shop" onclick="toggleMenu()" class="text-2xl brand-font text-white">แนงปกทั้งหมด</a>
+        <a href="#how-to-order" onclick="toggleMenu()" class="text-2xl brand-font text-white">ขั้นตอนการสั่งซื้อ</a>
+        <a href="#contact" onclick="toggleMenu()" class="text-2xl brand-font text-white">ช่องทางการติดต่อ</a>
+        <button onclick="toggleMenu()" class="mt-8 text-gray-500 text-[10px] uppercase tracking-[0.5em]">Close</button>
     </div>
 
-    <!-- Hero -->
-    <section class="relative h-screen flex items-center justify-center px-6">
-        <div class="relative z-10 text-center max-w-5xl">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="relative z-10 text-center w-full max-w-4xl">
             <div class="reveal">
-                <span class="text-[10px] md:text-[12px] tracking-[1em] text-sky-400 uppercase mb-6 block">✨ รินลดา ✨</span>
-                <h1 class="hero-title text-7xl md:text-9xl font-bold mb-8 animated-text uppercase">Rin Rinlada</h1>
-                <p class="hero-subtitle text-[12px] md:text-xl font-light tracking-[0.4em] text-white/60 mb-14 uppercase">รับทำปก + ปล่อยเอฟ | รังสรรค์งานศิลป์ด้วยสะเก็ดดาว</p>
+                <span class="text-[9px] tracking-[0.8em] text-sky-400 uppercase mb-4 block">✧ รินลดา ✧</span>
+                <h1 class="text-5xl md:text-8xl font-bold mb-6 animated-text uppercase leading-tight">Rinlada</h1>
+                <p class="text-[10px] md:text-lg font-light tracking-[0.3em] text-white/70 mb-12 uppercase px-4">รับทำปก + ปล่อยเอฟ </p>
                 
-                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center px-8">
                     <a href="#shop" class="btn-magical w-full sm:w-auto">
-                        <span class="btn-magical-inner uppercase">ผลงานานทั้งหมด</span>
+                        <span class="btn-magical-inner">ดูผลงานทั้งหมด</span>
                     </a>
                     <a href="#how-to-order" class="btn-magical w-full sm:w-auto">
-                        <span class="btn-magical-inner text-sky-400 uppercase">ขั้นตอนสั่งซื้อ</span>
+                        <span class="btn-magical-inner text-sky-400">วิธีสั่งซื้อ</span>
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Gallery -->
-    <section id="shop" class="relative py-32 px-6 md:px-12 z-10 bg-black/30">
+    <!-- Gallery Section -->
+    <section id="shop" class="relative py-24 px-6 md:px-12 z-10">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-24 reveal">
-                <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 uppercase">All works</h2>
-                <div class="flex items-center justify-center gap-6">
-                    <div class="h-px w-16 bg-gradient-to-r from-transparent to-sky-500"></div>
-                    <p class="text-pink-400 text-[10px] md:text-[12px] tracking-[0.5em] uppercase italic">Cover Art Styles</p>
-                    <div class="h-px w-16 bg-gradient-to-l from-transparent to-pink-500"></div>
-                </div>
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 uppercase">แนวที่รับทำทั้งหมด</h2>
+                <p class="text-pink-400 text-[9px] tracking-[0.4em] uppercase">ปัดซ้าย-ขวา เพื่อดูรูปถัดไป</p>
             </div>
 
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                <!-- Products injected by JS -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+                <!-- Injected by JS -->
             </div>
         </div>
     </section>
 
-    <!-- Ordering -->
-    <section id="how-to-order" class="relative py-32 px-6 md:px-12 z-10">
+    <!-- Ordering Steps -->
+    <section id="how-to-order" class="relative py-24 px-6 md:px-12 z-10 bg-white/[0.02]">
         <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-4xl font-bold text-white mb-4">ขั้นตอนการสั่งซื้อ</h2>
-                <p class="text-sky-400 text-[10px] tracking-[0.6em] uppercase">Simple Steps to Your Art</p>
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-white mb-2">วิธีการสั่งซื้อ</h2>
+                <div class="h-1 w-12 bg-sky-500 mx-auto rounded-full"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="glass-card p-10 rounded-2xl reveal group">
-                    <div class="text-5xl font-bold brand-font text-pink-500/30 mb-6 group-hover:text-pink-500/60 transition-colors">01</div>
-                    <h3 class="text-white text-xl font-bold mb-4 uppercase tracking-widest">เลือกแนวที่สนใจ</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">แคปรูปแนวปกที่สนใจ แล้วส่งมาสอบถามได้ที่ไอจีด้านล่างนี้เลยค่ะ</p>
-                    <a href="https://www.instagram.com/rinlxda_zx" target="_blank" class="text-pink-400 text-xs tracking-widest font-bold border-b border-pink-400/30 pb-1">CONTACT INSTAGRAM →</a>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Step 1 -->
+                <div class="glass-card p-8 rounded-2xl reveal flex flex-col">
+                    <span class="step-number brand-font">01</span>
+                    <h3 class="text-white text-lg font-bold mb-3 uppercase tracking-wider">เลือกแนวทาง</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed mb-6">แคปรูปแนวปกที่สนใจ แล้วส่งมาสอบถามได้ที่ไอจีได้เลยครับ</p>
+                    <a href="https://www.instagram.com/rinlxda_zx" target="_blank" class="mt-auto text-pink-400 text-[10px] tracking-widest font-bold">DM INSTAGRAM →</a>
                 </div>
 
-                <div class="glass-card p-10 rounded-2xl reveal group">
-                    <div class="text-5xl font-bold brand-font text-sky-500/30 mb-6 group-hover:text-sky-500/60 transition-colors">02</div>
-                    <h3 class="text-white text-xl font-bold mb-4 uppercase tracking-widest">แจ้งข้อมูล</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">สามารถพบรูปมาเองได้นะคะ หากให้ร้านหาภาพให้รบกวนแจ้งชื่อตัวละครและร่างที่ต้องการให้ครบถ้วน</p>
-                    <div class="bg-white/5 p-4 rounded text-[11px] text-pink-300 italic">
-                        * กรณีให้ทางร้านหารูปให้ บวกเพิ่ม 0.50 บาท *
+                <!-- Step 2 -->
+                <div class="glass-card p-8 rounded-2xl reveal flex flex-col">
+                    <span class="step-number brand-font">02</span>
+                    <h3 class="text-white text-lg font-bold mb-3 uppercase tracking-wider">แจ้งข้อมูลงาน</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">สามารถนำรูปมาเองได้ หากให้ร้านหาให้รบกวนแจ้งชื่อตัวละครและร่างที่ต้องการ</p>
+                    <div class="mt-4 bg-sky-500/10 p-3 rounded border border-sky-500/20 text-[10px] text-sky-300 italic">
+                        * กรณีให้หารูปให้ มีค่าบริการเพิ่มเติม 0.50 บาท *
                     </div>
                 </div>
 
-                <div class="glass-card p-10 rounded-2xl reveal group">
-                    <div class="text-5xl font-bold brand-font text-pink-500/30 mb-6 group-hover:text-pink-500/60 transition-colors">03</div>
-                    <h3 class="text-white text-xl font-bold mb-4 uppercase tracking-widest">ชำระเงิน</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">ชำระยอดพร้อมแจ้งสลิป <strong>(ต้องระบุโน๊ตว่า "ซื้อขายกับริน")</strong></p>
-                    <p class="text-red-400 text-[10px] uppercase tracking-widest font-bold">⚠️ ลืมโน๊ตจ่ายเพิ่ม 1 บาทนะคะ ⚠️</p>
+                <!-- Step 3 -->
+                <div class="glass-card p-8 rounded-2xl reveal flex flex-col">
+                    <span class="step-number brand-font">03</span>
+                    <h3 class="text-white text-lg font-bold mb-3 uppercase tracking-wider">ชำระเงิน</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed mb-4">ชำระยอดพร้อมส่งสลิปหลักฐาน</p>
+                    <p class="text-red-400 text-[9px] uppercase font-bold bg-red-400/10 p-2 rounded tracking-tighter text-center">ต้องระบุโน๊ตว่า "ซื้อขายกับริน" (ลืมมีค่าปรับ 1 บาท)</p>
                 </div>
 
-                <div class="glass-card p-10 rounded-2xl reveal group border-sky-500/30">
-                    <div class="text-5xl font-bold brand-font text-sky-500/30 mb-6 group-hover:text-sky-500/60 transition-colors">04</div>
-                    <h3 class="text-white text-xl font-bold mb-4 uppercase tracking-widest">รอรับงาน</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">รอรับงานไม่เกิน 1 ชม. หากล่าช้าทักซ้ำได้เลย</p>
-                    <p class="text-sky-300 text-xs font-bold uppercase tracking-widest">✨ ห้ามหนีรีวิว & เครดิตเด็ดขาด ✨</p>
+                <!-- Step 4 -->
+                <div class="glass-card p-8 rounded-2xl reveal flex flex-col border-sky-500/30">
+                    <span class="step-number brand-font">04</span>
+                    <h3 class="text-white text-lg font-bold mb-3 uppercase tracking-wider">รอรับผลงาน</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">รอรับงานไม่เกิน 1 ชม. หากล่าช้าสามารถทักซ้ำได้ทันที</p>
+                    <p class="mt-4 text-sky-300 text-[9px] font-bold uppercase tracking-widest">✨ ห้ามลบเครดิตผลงาน ✨</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact" class="relative z-10 bg-black/60 pt-24 pb-12 px-8 border-t border-white/5">
-        <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
-            <h3 class="brand-font text-3xl font-bold text-white tracking-[0.6em] mb-10">RINLADA</h3>
-            <div class="flex gap-12 mb-16">
-                <a href="https://www.instagram.com/rinlxda_zx" class="text-gray-400 hover:text-pink-400 transition-all text-xs tracking-[0.3em] uppercase border-b border-transparent hover:border-pink-400 pb-1">Instagram</a>
-                <a href="#" class="text-gray-400 hover:text-sky-400 transition-all text-xs tracking-[0.3em] uppercase border-b border-transparent hover:border-sky-400 pb-1">Twitter</a>
+    <footer id="contact" class="relative z-10 py-20 px-8 border-t border-white/5">
+        <div class="max-w-7xl mx-auto text-center">
+            <h3 class="brand-font text-2xl font-bold text-white tracking-[0.5em] mb-8">RINLADA</h3>
+            <div class="flex justify-center gap-8 mb-12">
+                <a href="https://www.instagram.com/rinlxda_zx" class="text-gray-500 hover:text-pink-400 transition-colors text-[10px] tracking-widest uppercase">IG</a>
+                <a href="#" class="text-gray-500 hover:text-sky-400 transition-colors text-[10px] tracking-widest uppercase">X</a>
             </div>
-            <p class="text-[10px] text-gray-700 tracking-[0.4em] uppercase">&copy; 2026 RINLADA.</p>
+            <p class="text-[8px] text-gray-700 tracking-[0.5em] uppercase">&copy; 2026 RINLADA.</p>
         </div>
     </footer>
 
     <!-- Lightbox -->
     <div id="lightbox" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="Masterpiece" onclick="event.stopPropagation()">
+        <img id="lightbox-img" src="" alt="Zoomed Work" onclick="event.stopPropagation()">
     </div>
 
     <script>
         // Progress Bar
-        window.onscroll = () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             document.getElementById("scroll-progress").style.width = (winScroll / height) * 100 + "%";
-        };
+        });
 
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('active');
-            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+            const isActive = menu.classList.toggle('active');
+            document.body.classList.toggle('menu-open', isActive);
         }
 
-        // --- Stardust Particle System ---
+        // --- Optimized Particle System for Mobile ---
         const canvas = document.getElementById('particles-js');
         const ctx = canvas.getContext('2d');
         let particles = [];
         let mouseTrail = [];
 
-        function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
 
         class Particle {
             constructor(isMouse = false, x, y) {
@@ -332,9 +338,9 @@
             reset(x, y) {
                 this.x = x || Math.random() * canvas.width;
                 this.y = y || Math.random() * canvas.height;
-                this.size = Math.random() * (this.isMouse ? 3 : 2);
-                this.speedX = (Math.random() - 0.5) * (this.isMouse ? 2 : 0.6);
-                this.speedY = (Math.random() - 0.5) * (this.isMouse ? 2 : 0.6);
+                this.size = Math.random() * (this.isMouse ? 2.5 : 1.5);
+                this.speedX = (Math.random() - 0.5) * (this.isMouse ? 1.5 : 0.4);
+                this.speedY = (Math.random() - 0.5) * (this.isMouse ? 1.5 : 0.4);
                 this.opacity = Math.random();
                 this.life = this.isMouse ? 1 : 1000;
                 this.color = Math.random() > 0.5 ? '#f472b6' : '#38bdf8';
@@ -344,7 +350,7 @@
                 this.y += this.speedY;
                 if (this.isMouse) {
                     this.life -= 0.02;
-                    this.size *= 0.96;
+                    this.size *= 0.97;
                 } else {
                     if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                     if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
@@ -352,57 +358,55 @@
             }
             draw() {
                 ctx.fillStyle = this.color;
-                ctx.globalAlpha = this.isMouse ? this.life : this.opacity * 0.5;
+                ctx.globalAlpha = this.isMouse ? this.life : this.opacity * 0.4;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
-                // Add a glow to mouse particles
-                if (this.isMouse && this.life > 0.5) {
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = this.color;
-                } else {
-                    ctx.shadowBlur = 0;
-                }
             }
         }
 
         function createParticles() {
-            for (let i = 0; i < 150; i++) particles.push(new Particle());
+            // Fewer particles on mobile for better performance
+            const count = window.innerWidth < 768 ? 60 : 120;
+            particles = [];
+            for (let i = 0; i < count; i++) particles.push(new Particle());
         }
 
-        // Mouse interaction for stardust trail
-        window.addEventListener('mousemove', (e) => {
-            for (let i = 0; i < 3; i++) {
-                mouseTrail.push(new Particle(true, e.clientX, e.clientY));
+        // Mouse/Touch Interaction
+        const handleInteraction = (e) => {
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            const y = e.touches ? e.touches[0].clientY : e.clientY;
+            for (let i = 0; i < 2; i++) {
+                mouseTrail.push(new Particle(true, x, y));
             }
-            if (mouseTrail.length > 100) mouseTrail.shift();
+            if (mouseTrail.length > 50) mouseTrail.shift();
+        };
+
+        window.addEventListener('mousemove', handleInteraction);
+        window.addEventListener('touchmove', (e) => {
+            if (e.target.tagName !== 'IMG') handleInteraction(e);
         });
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Background stardust
             particles.forEach(p => { p.update(); p.draw(); });
-            
-            // Mouse stardust
             mouseTrail = mouseTrail.filter(p => p.life > 0);
             mouseTrail.forEach(p => { p.update(); p.draw(); });
-            
             requestAnimationFrame(animate);
         }
 
         const products = [
-            { title: "Magical Style 01", price: "5.50 ฿", desc: "cr. คุณแพท", img1: "https://img5.pic.in.th/file/secure-sv1/9c8dc9837fc9aef98.jpg", img2: "https://img5.pic.in.th/file/secure-sv1/92367c8e1bad97592.jpg" },
-            { title: "Magical Style 02", price: "4.00 ฿", desc: "cr. คุณสายพิณ", img1: "https://img5.pic.in.th/file/secure-sv1/146011e204cec3441.jpg", img2: "https://img2.pic.in.th/15b6162c6873f4674.jpg" },
-            { title: "Magical Style 03", price: "4.00 ฿", desc: "cr. Renbi ", img1:"https://img2.pic.in.th/2b6f42a769c14d829.jpg" , img2: "https://img2.pic.in.th/207d5f2ee17eeb08e.jpg" },
-            { title: "Magical Style 04", price: "4.00 ฿", desc: "cr. คุณมุก", img1: "https://img2.pic.in.th/3229d749d0ef128a2.jpg", img2: "https://img5.pic.in.th/file/secure-sv1/338a68f0d3d28340e.jpg" },
-            { title: "Magical Style 05", price: "5.00 ฿", desc: "cr. คุณมุก", img1: "https://img2.pic.in.th/4311fa8f28fee6411.jpg", img2: "https://img5.pic.in.th/file/secure-sv1/495d9ded05bb45b71.jpg" },
-            { title: "Magical Style 06", price: "5.50 ฿", desc: "cr. คุณหมิง", img1: "https://img2.pic.in.th/58974ba090d8051dc.jpg", img2: "https://img5.pic.in.th/file/secure-sv1/54b086dbe5a9cb4e9.jpg" },
-            { title: "Magical Style 07", price: "5.00 ฿", desc: "cr. คุณมุก", img1: "https://img5.pic.in.th/file/secure-sv1/6f6b172c035179ee2.jpg", img2: "https://img5.pic.in.th/file/secure-sv1/6c61165a7df94e10c.jpg" },
-            { title: "Magical Style 08", price: "5.00 ฿", desc: "cr. rinlada", img1: "https://img2.pic.in.th/10e43b442d2c3b646d.jpg", img2:  "https://img2.pic.in.th/103043c9f7eccc5dd2.jpg"},
-            { title: "Magical Style 09", price: "4.00 ฿", desc: "cr. rinlada", img1: "https://img5.pic.in.th/file/secure-sv1/71e1281f1411753c6.jpg", img2: "https://img2.pic.in.th/73e33b04f4c4e83ca.jpg" },
-            { title: "Magical Style 10", price: "4.50 ฿", desc: "cr.rinlada", img1: "https://img2.pic.in.th/8b221983e7d8b6592.jpg", img2: "https://img2.pic.in.th/8a6ded88414197f24.jpg" },
-            { title: "Magical Style 11", price: "4.00 ฿", desc: "cr. คุณมุก", img1: "https://img5.pic.in.th/file/secure-sv1/114b44f7f7ce4ebfe7.jpg", img2: "https://img2.pic.in.th/1110ec989060b78124.jpg" }
+            { title: "แนวปก 01", price: "5.50 ฿", desc: "cr. คุณแพท", img1: "https://img5.pic.in.th/file/secure-sv1/9c8dc9837fc9aef98.jpg", img2: "https://img5.pic.in.th/file/secure-sv1/92367c8e1bad97592.jpg" },
+            { title: "แนวปก 02", price: "4.00 ฿", desc: "cr. คุณสายพิณ", img1: "https://img5.pic.in.th/file/secure-sv1/146011e204cec3441.jpg", img2: "https://img2.pic.in.th/15b6162c6873f4674.jpg" },
+            { title: "แนวปก 03", price: "4.00 ฿", desc: "cr. Renbi ", img1:"https://img2.pic.in.th/2b6f42a769c14d829.jpg" , img2: "https://img2.pic.in.th/207d5f2ee17eeb08e.jpg" },
+            { title: "แนวปก 04", price: "4.00 ฿", desc: "cr. คุณมุก", img1: "https://img2.pic.in.th/3229d749d0ef128a2.jpg", img2: "https://img5.pic.in.th/file/secure-sv1/338a68f0d3d28340e.jpg" },
+            { title: "แนวปก 05", price: "5.00 ฿", desc: "cr. คุณมุก", img1: "https://img2.pic.in.th/4311fa8f28fee6411.jpg", img2: "https://img5.pic.in.th/file/secure-sv1/495d9ded05bb45b71.jpg" },
+            { title: "แนวปก 06", price: "5.50 ฿", desc: "cr. คุณหมิง", img1: "https://img2.pic.in.th/58974ba090d8051dc.jpg", img2: "https://img5.pic.in.th/file/secure-sv1/54b086dbe5a9cb4e9.jpg" },
+            { title: "แนวปก 07", price: "5.00 ฿", desc: "cr. คุณมุก", img1: "https://img5.pic.in.th/file/secure-sv1/6f6b172c035179ee2.jpg", img2: "https://img5.pic.in.th/file/secure-sv1/6c61165a7df94e10c.jpg" },
+            { title: "แนวปก 08", price: "5.00 ฿", desc: "cr. rinlada", img1: "https://img2.pic.in.th/10e43b442d2c3b646d.jpg", img2:  "https://img2.pic.in.th/103043c9f7eccc5dd2.jpg"},
+            { title: "แนวปก 09", price: "4.00 ฿", desc: "cr. rinlada", img1: "https://img5.pic.in.th/file/secure-sv1/71e1281f1411753c6.jpg", img2: "https://img2.pic.in.th/73e33b04f4c4e83ca.jpg" },
+            { title: "แนวปก 10", price: "4.50 ฿", desc: "cr.rinlada", img1: "https://img2.pic.in.th/8b221983e7d8b6592.jpg", img2: "https://img2.pic.in.th/8a6ded88414197f24.jpg" },
+            { title: "แนวปก 11", price: "4.00 ฿", desc: "cr. คุณมุก", img1: "https://img5.pic.in.th/file/secure-sv1/114b44f7f7ce4ebfe7.jpg", img2: "https://img2.pic.in.th/1110ec989060b78124.jpg" }
         ];
 
         function renderProducts() {
@@ -410,45 +414,85 @@
             grid.innerHTML = products.map((p, i) => `
                 <div class="glass-card rounded-2xl overflow-hidden reveal group">
                     <div class="relative aspect-[3/4] overflow-hidden">
-                        <div class="flex h-full transition-transform duration-1000 ease-out" id="track-${i}" data-curr="0">
-                            <img src="${p.img1}" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox('${p.img1}')" loading="lazy">
-                            <img src="${p.img2}" class="w-full h-full object-cover cursor-zoom-in" onclick="openLightbox('${p.img2}')" loading="lazy">
+                        <div class="flex h-full transition-transform duration-700 ease-in-out product-track" 
+                             id="track-${i}" 
+                             data-curr="0"
+                             ontouchstart="handleTouchStart(event, ${i})"
+                             ontouchmove="handleTouchMove(event, ${i})"
+                             ontouchend="handleTouchEnd(event, ${i})">
+                            <img src="${p.img1}" class="w-full h-full object-cover" onclick="openLightbox('${p.img1}')" loading="lazy">
+                            <img src="${p.img2}" class="w-full h-full object-cover" onclick="openLightbox('${p.img2}')" loading="lazy">
                         </div>
-                        <div class="absolute inset-x-6 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onclick="move(${i}, -1)" class="w-10 h-10 rounded-full bg-black/40 text-white backdrop-blur-md pointer-events-auto">←</button>
-                            <button onclick="move(${i}, 1)" class="w-10 h-10 rounded-full bg-black/40 text-white backdrop-blur-md pointer-events-auto">→</button>
+                        
+                        <!-- Arrows (Visible on Mobile too) -->
+                        <div class="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none">
+                            <button onclick="move(${i}, -1)" class="w-8 h-8 rounded-full bg-black/40 text-white backdrop-blur-md pointer-events-auto flex items-center justify-center text-xs">←</button>
+                            <button onclick="move(${i}, 1)" class="w-8 h-8 rounded-full bg-black/40 text-white backdrop-blur-md pointer-events-auto flex items-center justify-center text-xs">→</button>
                         </div>
-                        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-                            <div class="w-2 h-2 rounded-full bg-white transition-all shadow-glow" id="dot-${i}-0"></div>
-                            <div class="w-2 h-2 rounded-full bg-white/20 transition-all shadow-glow" id="dot-${i}-1"></div>
+
+                        <!-- Dots -->
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                            <div class="w-1.5 h-1.5 rounded-full bg-white transition-all" id="dot-${i}-0"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-white/20 transition-all" id="dot-${i}-1"></div>
                         </div>
                     </div>
-                    <div class="p-8 text-center">
-                        <h3 class="brand-font text-white font-bold text-sm tracking-[0.2em] mb-3 group-hover:text-pink-400 transition-colors uppercase">${p.title}</h3>
-                        <p class="text-sky-400/50 text-[10px] uppercase tracking-widest italic mb-6">${p.desc}</p>
-                        <div class="flex items-center justify-between pt-6 border-t border-white/5">
-                            <span class="text-xl font-bold text-white">${p.price}</span>
-                            <button onclick="openLightbox('${p.img1}')" class="text-[9px] uppercase tracking-[0.3em] text-pink-300 font-bold">Details</button>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="brand-font text-white font-bold text-xs tracking-widest uppercase">${p.title}</h3>
+                            <span class="text-sm font-bold text-pink-400">${p.price}</span>
                         </div>
+                        <p class="text-gray-500 text-[9px] uppercase tracking-widest italic mb-4">${p.desc}</p>
+                        <button onclick="openLightbox('${p.img1}')" class="w-full py-2 border border-white/10 rounded-lg text-[9px] uppercase tracking-widest text-white hover:bg-white/5 transition-colors">View Details</button>
                     </div>
                 </div>
             `).join('');
             initObserver();
         }
 
+        // --- Swipe Logic for Mobile ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        function handleTouchStart(e, idx) {
+            touchStartX = e.changedTouches[0].screenX;
+        }
+
+        function handleTouchMove(e, idx) {
+            // Optional: add visual feedback during swipe
+        }
+
+        function handleTouchEnd(e, idx) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe(idx);
+        }
+
+        function handleSwipe(idx) {
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold) move(idx, 1); // Swipe Left -> Next
+            if (touchEndX > touchStartX + threshold) move(idx, -1); // Swipe Right -> Prev
+        }
+
         function move(idx, dir) {
             const track = document.getElementById(`track-${idx}`);
+            if (!track) return;
             let curr = parseInt(track.dataset.curr);
             curr = (curr + dir + 2) % 2;
             track.style.transform = `translateX(-${curr * 100}%)`;
             track.dataset.curr = curr;
-            document.getElementById(`dot-${idx}-0`).style.opacity = curr === 0 ? "1" : "0.2";
-            document.getElementById(`dot-${idx}-1`).style.opacity = curr === 1 ? "1" : "0.2";
+            
+            // Update dots
+            const d0 = document.getElementById(`dot-${idx}-0`);
+            const d1 = document.getElementById(`dot-${idx}-1`);
+            if (d0 && d1) {
+                d0.style.opacity = curr === 0 ? "1" : "0.2";
+                d1.style.opacity = curr === 1 ? "1" : "0.2";
+            }
         }
 
         function openLightbox(src) {
             const lb = document.getElementById('lightbox');
-            document.getElementById('lightbox-img').src = src;
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
             lb.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
@@ -466,17 +510,26 @@
                         entry.target.style.transform = "translateY(0)";
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.05 });
             document.querySelectorAll('.reveal').forEach(el => {
                 el.style.opacity = "0";
-                el.style.transform = "translateY(40px)";
-                el.style.transition = "all 1s cubic-bezier(0.2, 0.8, 0.2, 1)";
+                el.style.transform = "translateY(20px)";
+                el.style.transition = "all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)";
                 observer.observe(el);
             });
         }
 
-        window.addEventListener('resize', initCanvas);
-        window.onload = () => { initCanvas(); createParticles(); animate(); renderProducts(); };
+        window.addEventListener('resize', () => {
+            initCanvas();
+            createParticles();
+        });
+
+        window.onload = () => {
+            initCanvas();
+            createParticles();
+            animate();
+            renderProducts();
+        };
     </script>
 </body>
 </html>
